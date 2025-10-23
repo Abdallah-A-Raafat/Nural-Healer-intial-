@@ -1,0 +1,35 @@
+/* NeuralHealer theme tokens for Tailwind v4 */
+@theme {
+	--color-primary: #A36BAD;         /* Soft lavender-purple */
+	--color-secondary: #7E57C2;       /* Deep violet */
+	--color-accent: #D1A9E0;          /* Light pastel purple */
+	--color-background: #F7F4FA;      /* Light background */
+	--color-backgroundDark: #1C1A2B;  /* Dark background (unused currently) */
+	--color-textPrimary: #2E1A47;     /* Headings */
+	--color-textSecondary: #6B5B95;   /* Body text */
+	--color-lightText: #E5D9F2;       /* On dark surfaces */
+}
+
+@import "tailwindcss";
+
+/* Fallback utilities to ensure brand colors apply even if tokens aren't picked up */
+@layer utilities {
+	.text-textPrimary { color: #2E1A47; }
+	.text-textSecondary { color: #6B5B95; }
+	.text-lightText { color: #E5D9F2; }
+
+	.bg-background { background-color: #F7F4FA; }
+
+	.bg-primary { background-color: #A36BAD; }
+	.text-primary { color: #A36BAD; }
+	.bg-primary\/10 { background-color: rgba(163, 107, 173, 0.10); }
+
+	.bg-secondary { background-color: #7E57C2; }
+	.text-secondary { color: #7E57C2; }
+	.bg-secondary\/10 { background-color: rgba(126, 87, 194, 0.10); }
+
+	.bg-accent { background-color: #D1A9E0; }
+	.text-accent { color: #D1A9E0; }
+	.bg-accent\/20 { background-color: rgba(209, 169, 224, 0.20); }
+	.bg-accent\/30 { background-color: rgba(209, 169, 224, 0.30); }
+}

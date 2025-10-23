@@ -1,0 +1,193 @@
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import Button from '../components/common/Button';
+import Input from '../components/common/Input';
+import { useAuth } from '../hooks/useAuth';
+
+const schema = yup.object({
+  firstName: yup
+    .string()
+    .required('First name is required')
+    .min(2, 'First name must be at least 2 characters'),
+  lastName: yup
+    .string()
+    .required('Last name is required')
+    .min(2, 'Last name must be at least 2 characters'),
+  email: yup
+    .string()
+    .email('Please enter a valid email')
+    .required('Email is required'),
+  password: yup
+    .string()
+    .min(8, 'Password must be at least 8 characters')
+    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/, 'Password must contain at least one uppercase letter, one lowercase letter, and one number')
+    .required('Password is required'),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref('password')], 'Passwords must match')
+    .required('Please confirm your password'),
+  agreeToTerms: yup
+    .boolean()
+    .oneOf([true], 'You must agree to the terms and conditions'),
+});
+
+const Register = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [apiError, setApiError] = useState('');
+  const { registerUser } = useAuth();
+  const navigate = useNavigate();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  const onSubmit = async (data) => {
+    setIsLoading(true);
+    setApiError('');
+
+    // eslint-disable-next-line no-unused-vars
+    const { confirmPassword, agreeToTerms, ...userData } = data;
+    
+    const result = await registerUser(userData);
+
+    if (result.success) {
+      navigate('/chat');
+    } else {
+      setApiError(result.error);
+    }
+
+    setIsLoading(false);
+  };
+
+  return (
+    <div className="min-h-screen bg-background flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <div className="sm:mx-auto sm:w-full sm:max-w-md">
+        <h2 className="mt-6 text-center text-3xl font-bold text-textPrimary">
+          Join NeuralHealer
+        </h2>
+        <p className="mt-2 text-center text-sm text-textSecondary">
+          Create your account and start your mental health journey
+        </p>
+      </div>
+
+      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+          <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+            {apiError && (
+              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
+                {apiError}
+              </div>
+            )}
+
+            <div className="grid grid-cols-2 gap-4">
+              <Input
+                label="First name"
+                type="text"
+                placeholder="First name"
+                required
+                error={errors.firstName?.message}
+                {...register('firstName')}
+              />
+
+              <Input
+                label="Last name"
+                type="text"
+                placeholder="Last name"
+                required
+                error={errors.lastName?.message}
+                {...register('lastName')}
+              />
+            </div>
+
+            <Input
+              label="Email address"
+              type="email"
+              placeholder="Enter your email"
+              required
+              error={errors.email?.message}
+              {...register('email')}
+            />
+
+            <Input
+              label="Password"
+              type="password"
+              placeholder="Create a password"
+              required
+              error={errors.password?.message}
+              {...register('password')}
+            />
+
+            <Input
+              label="Confirm password"
+              type="password"
+              placeholder="Confirm your password"
+              required
+              error={errors.confirmPassword?.message}
+              {...register('confirmPassword')}
+            />
+
+            <div className="flex items-center">
+              <input
+                id="agree-terms"
+                type="checkbox"
+                className="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
+                {...register('agreeToTerms')}
+              />
+              <label htmlFor="agree-terms" className="ml-2 block text-sm text-textPrimary">
+                I agree to the{' '}
+                <a href="#" className="text-primary hover:text-primary-dark font-medium">
+                  Terms and Conditions
+                </a>{' '}
+                and{' '}
+                <a href="#" className="text-primary hover:text-primary-dark font-medium">
+                  Privacy Policy
+                </a>
+              </label>
+            </div>
+            {errors.agreeToTerms && (
+              <p className="text-sm text-red-600">{errors.agreeToTerms.message}</p>
+            )}
+
+            <Button
+              type="submit"
+              size="large"
+              loading={isLoading}
+              className="w-full mt-6 bg-gray-100"
+              variant="ghost"
+            >
+              Create account
+            </Button>
+          </form>
+
+          <div className="mt-6">
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-300" />
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-2 bg-white text-gray-500">Already have an account?</span>
+              </div>
+            </div>
+
+            <div className="mt-6">
+              <Link to="/login">
+                <Button variant="ghost" size="large" className="w-full bg-gray-100">
+                  Sign in instead
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Register;
