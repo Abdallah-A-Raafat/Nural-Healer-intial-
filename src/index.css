@@ -4,7 +4,7 @@
 	--color-secondary: #7E57C2;       /* Deep violet */
 	--color-accent: #D1A9E0;          /* Light pastel purple */
 	--color-background: #F7F4FA;      /* Light background */
-	--color-backgroundDark: #1C1A2B;  /* Dark background (unused currently) */
+	--color-backgroundDark: #1C1A2B;  /* Dark background */
 	--color-textPrimary: #2E1A47;     /* Headings */
 	--color-textSecondary: #6B5B95;   /* Body text */
 	--color-lightText: #E5D9F2;       /* On dark surfaces */
@@ -12,14 +12,44 @@
 
 @import "tailwindcss";
 
+/* Light mode (default) */
+@layer base {
+	:root {
+		--color-bg-primary: #F7F4FA;
+		--color-bg-secondary: #FFFFFF;
+		--color-text-primary: #2E1A47;
+		--color-text-secondary: #6B5B95;
+		--color-border: #E0D5F0;
+	}
+
+	/* Dark mode */
+	:root.dark {
+		--color-bg-primary: #0F0D19;
+		--color-bg-secondary: #1C1A2B;
+		--color-text-primary: #E5D9F2;
+		--color-text-secondary: #B8A8D8;
+		--color-border: #3D3A55;
+	}
+
+	/* Global dark mode styles */
+	body {
+		@apply transition-colors duration-300;
+	}
+
+	body.dark {
+		@apply bg-[#0F0D19] text-[#E5D9F2];
+	}
+}
+
 /* Fallback utilities to ensure brand colors apply even if tokens aren't picked up */
 @layer utilities {
+	/* Light mode text colors */
 	.text-textPrimary { color: #2E1A47; }
 	.text-textSecondary { color: #6B5B95; }
 	.text-lightText { color: #E5D9F2; }
 
+	/* Light mode backgrounds */
 	.bg-background { background-color: #F7F4FA; }
-
 	.bg-primary { background-color: #A36BAD; }
 	.text-primary { color: #A36BAD; }
 	.bg-primary\/10 { background-color: rgba(163, 107, 173, 0.10); }
@@ -32,6 +62,28 @@
 	.text-accent { color: #D1A9E0; }
 	.bg-accent\/20 { background-color: rgba(209, 169, 224, 0.20); }
 	.bg-accent\/30 { background-color: rgba(209, 169, 224, 0.30); }
+
+	/* Dark mode overrides */
+	.dark .text-textPrimary { color: #E5D9F2; }
+	.dark .text-textSecondary { color: #B8A8D8; }
+
+	.dark .bg-white { background-color: #1C1A2B; }
+	.dark .bg-background { background-color: #0F0D19; }
+	.dark .bg-gray-100 { background-color: #1C1A2B; }
+	.dark .bg-gray-50 { background-color: #252230; }
+	.dark .bg-red-50 { background-color: #2E2031; }
+	.dark .bg-green-50 { background-color: #1F2821; }
+
+	.dark .border-gray-300 { border-color: #3D3A55; }
+	.dark .border-gray-200 { border-color: #3D3A55; }
+	.dark .border-accent\/30 { border-color: rgba(209, 169, 224, 0.2); }
+
+	.dark .hover\:border-gray-400:hover { border-color: #4D4A65; }
+	.dark .text-gray-500 { color: #9E95B8; }
+	.dark .text-gray-700 { color: #D0C5E0; }
+
+	.dark .shadow-lg { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5); }
+	.dark .shadow-md { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3); }
 }
 
 /* RTL Support for Arabic */

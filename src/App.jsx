@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { LanguageProvider } from './hooks/useLanguage.jsx';
+import { DarkModeProvider } from './hooks/useDarkMode.jsx';
 import Navbar from './components/common/Navbar';
 import Home from './pages/Home';
 import About from './pages/About';
@@ -17,11 +18,12 @@ import Profile from './pages/patient/Profile';
 
 function App() {
   return (
-    <LanguageProvider>
-      <Router>
-        <div className="min-h-screen bg-background">
-        <Navbar />
-        <Routes>
+    <DarkModeProvider>
+      <LanguageProvider>
+        <Router>
+          <div className="min-h-screen bg-background dark:bg-[#0F0D19] transition-colors duration-300">
+            <Navbar />
+            <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
@@ -76,10 +78,11 @@ function App() {
               </DoctorProtectedRoute>
             } 
           />
-        </Routes>
-        </div>
-      </Router>
-    </LanguageProvider>
+            </Routes>
+          </div>
+        </Router>
+      </LanguageProvider>
+    </DarkModeProvider>
   );
 }
 

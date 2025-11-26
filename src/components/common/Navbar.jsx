@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import Button from './Button';
 import LanguageToggle from './LanguageToggle';
+import DarkModeToggle from './DarkModeToggle';
 import { useAuth } from '../../hooks/useAuth';
 import { useLanguage } from '../../hooks/useLanguage.jsx';
 import navLogo from '../../assets/nav-logo.png';
@@ -40,7 +41,7 @@ const Navbar = () => {
   const navigation = isLoggedIn && accountType === 'doctor' ? doctorNav : patientNav;
 
   return (
-    <nav className="bg-white shadow-lg">
+    <nav className="bg-white dark:bg-[#1C1A2B] shadow-lg transition-colors duration-300">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-15">
           {/* Logo */}
@@ -61,8 +62,8 @@ const Navbar = () => {
                 to={item.href}
                 className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                   item.current
-                    ? 'text-primary bg-primary/10'
-                    : 'text-textSecondary hover:text-primary hover:bg-accent/20'
+                    ? 'text-primary bg-primary/10 dark:text-primary dark:bg-primary/20'
+                    : 'text-textSecondary dark:text-[#B8A8D8] hover:text-primary hover:bg-accent/20 dark:hover:text-primary dark:hover:bg-accent/10'
                 }`}
               >
                 {item.name}
@@ -71,7 +72,8 @@ const Navbar = () => {
           </div>
 
           {/* Desktop Auth Buttons */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden md:flex items-center space-x-2">
+            <DarkModeToggle />
             <LanguageToggle />
             {isLoggedIn ? (
               <div className="flex items-center space-x-4">
@@ -116,15 +118,15 @@ const Navbar = () => {
         {/* Mobile Navigation */}
         {isMenuOpen && (
           <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t">
+            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white dark:bg-[#1C1A2B] border-t dark:border-[#3D3A55] transition-colors duration-300">
               {navigation.map((item) => (
                 <Link
                   key={item.name}
                   to={item.href}
                   className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${
                     item.current
-                      ? 'text-primary bg-primary/10'
-                      : 'text-textSecondary hover:text-primary hover:bg-accent/20'
+                      ? 'text-primary bg-primary/10 dark:text-primary dark:bg-primary/20'
+                      : 'text-textSecondary dark:text-[#B8A8D8] hover:text-primary hover:bg-accent/20 dark:hover:text-primary dark:hover:bg-accent/10'
                   }`}
                   onClick={() => setIsMenuOpen(false)}
                 >
@@ -133,18 +135,19 @@ const Navbar = () => {
               ))}
               
               {/* Mobile Auth */}
-              <div className="pt-4 border-t border-accent/30">
-                <div className="px-3 py-2 pb-3">
+              <div className="pt-4 border-t border-accent/30 dark:border-[#3D3A55]">
+                <div className="px-3 py-2 pb-3 flex items-center space-x-2">
+                  <DarkModeToggle />
                   <LanguageToggle />
                 </div>
                 {isLoggedIn ? (
                   <div className="space-y-2">
-                    <div className="px-3 py-2 text-textSecondary">
+                    <div className="px-3 py-2 text-textSecondary dark:text-[#B8A8D8]">
                       {t.common.welcome}, {user?.firstName || 'User'}
                     </div>
                     <button
                       onClick={handleLogout}
-                      className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-textPrimary hover:text-primary hover:bg-accent/20"
+                      className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-textPrimary dark:text-[#E5D9F2] hover:text-primary hover:bg-accent/20 dark:hover:text-primary dark:hover:bg-accent/10"
                     >
                       {t.common.logout}
                     </button>
@@ -153,14 +156,14 @@ const Navbar = () => {
                   <div className="space-y-2">
                     <Link
                       to="/login"
-                      className="block px-3 py-2 rounded-md text-base font-medium text-textPrimary hover:text-primary hover:bg-accent/20"
+                      className="block px-3 py-2 rounded-md text-base font-medium text-textPrimary dark:text-[#E5D9F2] hover:text-primary hover:bg-accent/20 dark:hover:text-primary dark:hover:bg-accent/10"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       {t.common.signIn}
                     </Link>
                     <Link
                       to="/register"
-                      className="block px-3 py-2 rounded-md text-base font-medium text-white bg-primary hover:bg-primary/90"
+                      className="block px-3 py-2 rounded-md text-base font-medium text-white bg-primary hover:bg-primary/90 dark:bg-primary dark:hover:bg-primary/80"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       {t.common.getStarted}
