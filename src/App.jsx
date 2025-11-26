@@ -6,6 +6,10 @@ import Contact from './pages/Contact';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import ProtectedRoute from './components/auth/ProtectedRoute';
+import DoctorProtectedRoute from './components/auth/DoctorProtectedRoute';
+import DoctorDashboard from './pages/doctor/DoctorDashboard';
+import DoctorAppointments from './pages/doctor/DoctorAppointments';
+import DoctorPatients from './pages/doctor/DoctorPatients';
 
 // Placeholder components for protected routes
 const Chat = () => (
@@ -77,6 +81,31 @@ function App() {
               <ProtectedRoute>
                 <Profile />
               </ProtectedRoute>
+            } 
+          />
+          {/* Doctor Routes */}
+          <Route 
+            path="/doctor-dashboard" 
+            element={
+              <DoctorProtectedRoute>
+                <DoctorDashboard />
+              </DoctorProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/doctor-appointments" 
+            element={
+              <DoctorProtectedRoute>
+                <DoctorAppointments />
+              </DoctorProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/doctor-patients" 
+            element={
+              <DoctorProtectedRoute>
+                <DoctorPatients />
+              </DoctorProtectedRoute>
             } 
           />
         </Routes>

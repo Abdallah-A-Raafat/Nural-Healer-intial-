@@ -3,17 +3,38 @@ import apiClient from './apiClient';
 export const authService = {
   login: async (credentials) => {
     // TEMP: Allow login with test credentials for local testing
+    // Patient test account
     if (
-      credentials.email === 'test@example.com' &&
-      credentials.password === 'test1234'
+      credentials.email === 'patient@test.com' &&
+      credentials.password === 'Patient123'
     ) {
       return {
         user: {
-          id: 'test-user',
-          name: 'Test User',
-          email: 'test@example.com',
+          id: 'patient-user-001',
+          firstName: 'Sarah',
+          lastName: 'Patient',
+          email: 'patient@test.com',
+          accountType: 'patient',
         },
-        token: 'fake-jwt-token',
+        token: 'fake-jwt-token-patient',
+        accountType: 'patient',
+      };
+    }
+    // Doctor test account
+    if (
+      credentials.email === 'doctor@test.com' &&
+      credentials.password === 'Doctor123'
+    ) {
+      return {
+        user: {
+          id: 'doctor-user-001',
+          firstName: 'John',
+          lastName: 'Doctor',
+          email: 'doctor@test.com',
+          accountType: 'doctor',
+        },
+        token: 'fake-jwt-token-doctor',
+        accountType: 'doctor',
       };
     }
     // Otherwise, use the real API

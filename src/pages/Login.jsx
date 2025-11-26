@@ -21,11 +21,11 @@ const schema = yup.object({
 const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [apiError, setApiError] = useState('');
-  const { loginUser } = useAuth();
+  const { loginUser, accountType } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
-  const from = location.state?.from?.pathname || '/chat';
+  const from = location.state?.from?.pathname || (accountType === 'doctor' ? '/doctor-dashboard' : '/chat');
 
   const {
     register,

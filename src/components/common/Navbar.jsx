@@ -6,7 +6,7 @@ import navLogo from '../../assets/nav-logo.png';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { user, isLoggedIn, logoutUser } = useAuth();
+  const { user, isLoggedIn, accountType, logoutUser } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -15,16 +15,26 @@ const Navbar = () => {
     navigate('/');
   };
 
-  const navigation = [
+  // Patient navigation
+  const patientNav = [
     { name: 'Home', href: '/', current: location.pathname === '/' },
     { name: 'About', href: '/about', current: location.pathname === '/about' },
     { name: 'Contact', href: '/contact', current: location.pathname === '/contact' },
-    ...(isLoggedIn ? [
+    ...(isLoggedIn && accountType === 'patient' ? [
       { name: 'Chat', href: '/chat', current: location.pathname === '/chat' },
       { name: 'Booking', href: '/booking', current: location.pathname === '/booking' },
       { name: 'Profile', href: '/profile', current: location.pathname === '/profile' },
     ] : []),
   ];
+
+  // Doctor navigation
+  const doctorNav = [
+    { name: 'Dashboard', href: '/doctor-dashboard', current: location.pathname === '/doctor-dashboard' },
+    { name: 'Appointments', href: '/doctor-appointments', current: location.pathname === '/doctor-appointments' },
+    { name: 'My Patients', href: '/doctor-patients', current: location.pathname === '/doctor-patients' },
+  ];
+
+  const navigation = isLoggedIn && accountType === 'doctor' ? doctorNav : patientNav;
 
   return (
     <nav className="bg-white shadow-lg">
@@ -61,9 +71,14 @@ const Navbar = () => {
           <div className="hidden md:flex items-center space-x-4">
             {isLoggedIn ? (
               <div className="flex items-center space-x-4">
-                <span className="text-textSecondary">
-                  Welcome, {user?.firstName || 'User'}
-                </span>
+                <div className="flex flex-col items-end">
+                  <span className="text-textSecondary text-sm">
+                    Welcome, {user?.firstName || 'User'}
+                  </span>
+                  <span className="text-xs text-primary font-medium capitalize">
+                    {accountType === 'doctor' ? 'Doctor' : 'Patient'}
+                  </span>
+                </div>
                 <Button variant="ghost" onClick={handleLogout}>
                   Logout
                 </Button>

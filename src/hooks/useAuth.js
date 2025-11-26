@@ -4,12 +4,12 @@ import { authService } from '../services/authService';
 import { handleApiError } from '../utils/errorHandler';
 
 export const useAuth = () => {
-  const { user, token, isLoggedIn, login, logout, updateUser } = useAuthStore();
+  const { user, token, isLoggedIn, accountType, login, logout, updateUser } = useAuthStore();
 
   const loginUser = async (credentials) => {
     try {
       const response = await authService.login(credentials);
-      login(response.user, response.token);
+      login(response.user, response.token, response.accountType);
       return { success: true, data: response };
     } catch (error) {
       const message = handleApiError(error);
@@ -20,7 +20,7 @@ export const useAuth = () => {
   const registerUser = async (userData) => {
     try {
       const response = await authService.register(userData);
-      login(response.user, response.token);
+      login(response.user, response.token, userData.accountType);
       return { success: true, data: response };
     } catch (error) {
       const message = handleApiError(error);
@@ -61,6 +61,7 @@ export const useAuth = () => {
     user,
     token,
     isLoggedIn,
+    accountType,
     loginUser,
     registerUser,
     logoutUser,

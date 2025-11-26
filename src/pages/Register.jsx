@@ -8,6 +8,10 @@ import Input from '../components/common/Input';
 import { useAuth } from '../hooks/useAuth';
 
 const schema = yup.object({
+  accountType: yup
+    .string()
+    .required('Please select an account type')
+    .oneOf(['patient', 'doctor'], 'Invalid account type'),
   firstName: yup
     .string()
     .required('First name is required')
@@ -43,10 +47,16 @@ const Register = () => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
+    defaultValues: {
+      accountType: 'patient',
+    },
   });
+
+  const accountType = watch('accountType');
 
   const onSubmit = async (data) => {
     setIsLoading(true);
@@ -58,7 +68,8 @@ const Register = () => {
     const result = await registerUser(userData);
 
     if (result.success) {
-      navigate('/chat');
+      // Navigate based on account type
+      navigate(userData.accountType === 'doctor' ? '/doctor-dashboard' : '/chat');
     } else {
       setApiError(result.error);
     }
@@ -85,6 +96,45 @@ const Register = () => {
                 {apiError}
               </div>
             )}
+
+            {/* Account Type Selection */}
+            <div className="space-y-3">
+              <label className="block text-sm font-medium text-textPrimary">
+                I am a:
+              </label>
+              <div className="grid grid-cols-2 gap-3">
+                <label className={`relative flex items-center p-4 border-2 rounded-lg cursor-pointer transition-all ${
+                  accountType === 'patient' 
+                    ? 'border-primary bg-primary/5' 
+                    : 'border-gray-200 hover:border-gray-300'
+                }`}>
+                  <input
+                    type="radio"
+                    value="patient"
+                    {...register('accountType')}
+                    className="h-4 w-4 text-primary"
+                  />
+                  <span className="ml-2 font-medium text-textPrimary">Patient</span>
+                </label>
+
+                <label className={`relative flex items-center p-4 border-2 rounded-lg cursor-pointer transition-all ${
+                  accountType === 'doctor' 
+                    ? 'border-primary bg-primary/5' 
+                    : 'border-gray-200 hover:border-gray-300'
+                }`}>
+                  <input
+                    type="radio"
+                    value="doctor"
+                    {...register('accountType')}
+                    className="h-4 w-4 text-primary"
+                  />
+                  <span className="ml-2 font-medium text-textPrimary">Doctor</span>
+                </label>
+              </div>
+              {errors.accountType && (
+                <p className="text-sm text-red-600">{errors.accountType.message}</p>
+              )}
+            </div>
 
             <div className="grid grid-cols-2 gap-4">
               <Input
