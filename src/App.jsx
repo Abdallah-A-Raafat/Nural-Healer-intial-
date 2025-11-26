@@ -10,43 +10,11 @@ import DoctorProtectedRoute from './components/auth/DoctorProtectedRoute';
 import DoctorDashboard from './pages/doctor/DoctorDashboard';
 import DoctorAppointments from './pages/doctor/DoctorAppointments';
 import DoctorPatients from './pages/doctor/DoctorPatients';
+import Chat from './pages/patient/Chat';
+import Doctors from './pages/patient/Doctors';
+import Profile from './pages/patient/Profile';
 
 // Placeholder components for protected routes
-const Chat = () => (
-  <div className="min-h-screen bg-background p-8">
-    <div className="container mx-auto">
-  <h1 className="text-3xl font-bold text-textPrimary mb-6">AI Therapy Chat</h1>
-  <div className="bg-white rounded-lg shadow-md p-6">
-  <p className="text-textSecondary">Chat interface will be implemented here.</p>
-  <p className="text-textSecondary mt-2">This is where you'll interact with the AI therapist using voice and text.</p>
-      </div>
-    </div>
-  </div>
-);
-
-const Booking = () => (
-  <div className="min-h-screen bg-background p-8">
-    <div className="container mx-auto">
-  <h1 className="text-3xl font-bold text-textPrimary mb-6">Book a Session</h1>
-  <div className="bg-white rounded-lg shadow-md p-6">
-  <p className="text-textSecondary">Professional booking system will be implemented here.</p>
-  <p className="text-textSecondary mt-2">Browse and book sessions with licensed psychologists.</p>
-      </div>
-    </div>
-  </div>
-);
-
-const Profile = () => (
-  <div className="min-h-screen bg-background p-8">
-    <div className="container mx-auto">
-  <h1 className="text-3xl font-bold text-textPrimary mb-6">Your Profile</h1>
-  <div className="bg-white rounded-lg shadow-md p-6">
-  <p className="text-textSecondary">User dashboard and session history will be implemented here.</p>
-  <p className="text-textSecondary mt-2">View your progress, past sessions, and self-help suggestions.</p>
-      </div>
-    </div>
-  </div>
-);
 
 function App() {
   return (
@@ -71,7 +39,7 @@ function App() {
             path="/booking" 
             element={
               <ProtectedRoute>
-                <Booking />
+                <Doctors />
               </ProtectedRoute>
             } 
           />

@@ -22,7 +22,7 @@ const Navbar = () => {
     { name: 'Contact', href: '/contact', current: location.pathname === '/contact' },
     ...(isLoggedIn && accountType === 'patient' ? [
       { name: 'Chat', href: '/chat', current: location.pathname === '/chat' },
-      { name: 'Booking', href: '/booking', current: location.pathname === '/booking' },
+      { name: 'Doctors', href: '/booking', current: location.pathname === '/booking' },
       { name: 'Profile', href: '/profile', current: location.pathname === '/profile' },
     ] : []),
   ];
