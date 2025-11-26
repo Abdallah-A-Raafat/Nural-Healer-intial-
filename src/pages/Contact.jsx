@@ -4,6 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Button from '../components/common/Button';
 import Input from '../components/common/Input';
+import { useLanguage } from '../hooks/useLanguage.jsx';
 
 const schema = yup.object({
   name: yup
@@ -24,6 +25,7 @@ const schema = yup.object({
 });
 
 const Contact = () => {
+  const { t } = useLanguage();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -56,9 +58,9 @@ const Contact = () => {
       {/* Hero Section */}
       <div className="bg-gradient-to-br from-primary to-secondary text-white py-20">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="text-5xl font-bold mb-6 text-lightText">Contact Us</h1>
+          <h1 className="text-5xl font-bold mb-6 text-lightText">{t.contact.contactUs}</h1>
           <p className="text-xl text-lightText max-w-3xl mx-auto">
-            We're here to help. Reach out to us with any questions, feedback, or support needs.
+            {t.contact.hereToHelp}
           </p>
         </div>
       </div>
@@ -68,11 +70,10 @@ const Contact = () => {
           {/* Contact Information */}
           <div>
             <h2 className="text-3xl font-bold text-textPrimary mb-8">
-              Get in Touch
+              {t.contact.getInTouch}
             </h2>
             <p className="text-lg text-textSecondary mb-8">
-              Have questions about NeuralHealer? Need technical support? Want to provide feedback? 
-              We'd love to hear from you.
+              {t.contact.haveQuestions}
             </p>
 
             <div className="space-y-6">
@@ -83,9 +84,9 @@ const Contact = () => {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-textPrimary ">Email Support</h3>
+                  <h3 className="text-lg font-semibold text-textPrimary ">{t.contact.emailSupport}</h3>
                   <p className="text-textSecondary">support@neuralhealer.com</p>
-                  <p className="text-sm text-textSecondary">We typically respond within 24 hours</p>
+                  <p className="text-sm text-textSecondary">{t.contact.responseTime}</p>
                 </div>
               </div>
 
@@ -97,7 +98,7 @@ const Contact = () => {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-textPrimary ">Office Location</h3>
+                  <h3 className="text-lg font-semibold text-textPrimary ">{t.contact.officeLocation}</h3>
                   <p className="text-textSecondary ">Cairo, Egypt</p>
                   <p className="text-sm text-textSecondary ">Graduation Project - Faculty of Computer Science</p>
                 </div>
@@ -136,7 +137,7 @@ const Contact = () => {
 
           {/* Contact Form */}
           <div className="bg-white rounded-lg shadow-md p-8">
-            <h3 className="text-2xl font-bold text-textPrimary mb-6">Send us a Message</h3>
+            <h3 className="text-2xl font-bold text-textPrimary mb-6">{t.contact.contactForm}</h3>
             
             {isSubmitted && (
               <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
@@ -145,7 +146,7 @@ const Contact = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                   </svg>
                   <p className="text-green-800 font-medium">
-                    Thank you! Your message has been sent successfully.
+                    {t.contact.successMessage}
                   </p>
                 </div>
               </div>
@@ -153,7 +154,7 @@ const Contact = () => {
 
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               <Input
-                label="Full Name"
+                label={t.contact.name}
                 type="text"
                 placeholder="Enter your full name"
                 required
@@ -162,7 +163,7 @@ const Contact = () => {
               />
 
               <Input
-                label="Email Address"
+                label={t.common.email}
                 type="email"
                 placeholder="Enter your email"
                 required
@@ -171,7 +172,7 @@ const Contact = () => {
               />
 
               <Input
-                label="Subject"
+                label={t.contact.subject}
                 type="text"
                 placeholder="What is this regarding?"
                 required
@@ -181,7 +182,7 @@ const Contact = () => {
 
               <div className="space-y-1">
                 <label className="block text-sm font-medium text-gray-700">
-                  Message <span className="text-red-500">*</span>
+                  {t.contact.message} <span className="text-red-500">*</span>
                 </label>
                 <textarea
                   rows="6"
@@ -200,7 +201,7 @@ const Contact = () => {
                 loading={isSubmitting}
                 className="w-full"
               >
-                Send Message
+                {t.common.submit}
               </Button>
             </form>
           </div>

@@ -1,10 +1,12 @@
 import { Link, useNavigate } from 'react-router-dom';
 import Button from '../components/common/Button';
 import { useAuth } from '../hooks/useAuth';
+import { useLanguage } from '../hooks/useLanguage.jsx';
 import appIcon from '../assets/icon.png';
 
 const About = () => {
   const { isLoggedIn } = useAuth();
+  const { t } = useLanguage();
   const navigate = useNavigate();
 
   const handleGetStarted = () => {
@@ -20,9 +22,9 @@ const About = () => {
       {/* Hero Section */}
       <div className="bg-gradient-to-br from-primary to-secondary text-white py-20">
         <div className="container mx-auto px-4 text-center">
-              <h1 className="text-5xl font-bold mb-6 text-lightText">About NeuralHealer</h1>
+              <h1 className="text-5xl font-bold mb-6 text-lightText">{t.about.aboutNeuralHealer}</h1>
               <p className="text-xl max-w-3xl mx-auto text-lightText">
-            Empowering mental health through innovative AI technology and compassionate care
+            {t.about.empoweringMentalHealth}
           </p>
         </div>
       </div>
@@ -31,16 +33,10 @@ const About = () => {
       <div className="container mx-auto px-4 py-16">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold text-textPrimary mb-8 text-center">
-            Our Mission
+            {t.about.ourMission}
           </h2>
           <p className="text-lg text-textSecondary leading-relaxed mb-8">
-            At NeuralHealer, we believe that mental health support should be accessible, immediate, and effective. 
-            Our mission is to provide initial psychological support through advanced AI technology, making the 
-            first step towards mental wellness easier and more approachable for everyone.
-          </p>
-          <p className="text-lg text-textSecondary leading-relaxed">
-            We combine cutting-edge artificial intelligence with evidence-based therapeutic approaches to offer 
-            personalized support, while seamlessly connecting users with licensed professionals when needed.
+            {t.about.missionText}
           </p>
         </div>
       </div>
@@ -59,9 +55,9 @@ const About = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
               </div>
-                <h3 className="text-xl font-semibold text-textPrimary mb-3">AI-Powered Support</h3>
+                <h3 className="text-xl font-semibold text-textPrimary mb-3">{t.about.aiPoweredSupport}</h3>
                 <p className="text-textSecondary">
-                Advanced natural language processing and emotion detection provide personalized therapeutic responses.
+                {t.about.aiPoweredSupportDesc}
               </p>
             </div>
 
@@ -71,9 +67,9 @@ const About = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                 </svg>
               </div>
-                <h3 className="text-xl font-semibold text-textPrimary mb-3">Privacy First</h3>
+                <h3 className="text-xl font-semibold text-textPrimary mb-3">{t.about.privacyFirst}</h3>
                 <p className="text-textSecondary">
-                Your conversations are encrypted and secure. We prioritize your privacy and confidentiality.
+                {t.about.privacyFirstDesc}
               </p>
             </div>
 
@@ -83,9 +79,9 @@ const About = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
               </div>
-                <h3 className="text-xl font-semibold text-textPrimary mb-3">Professional Network</h3>
+                <h3 className="text-xl font-semibold text-textPrimary mb-3">{t.about.professionalNetwork}</h3>
                 <p className="text-textSecondary">
-                Seamless connection to licensed psychologists for when you need professional intervention.
+                {t.about.professionalNetworkDesc}
               </p>
             </div>
           </div>
@@ -95,7 +91,7 @@ const About = () => {
       {/* Team Section */}
       <div className="container mx-auto px-4 py-16">
     <h2 className="text-3xl font-bold text-textPrimary mb-12 text-center">
-            Our Team
+            {t.about.ourTeam}
         </h2>
         
         <div className="grid md:grid-cols-4 gap-16  mx-auto">
@@ -162,13 +158,13 @@ const About = () => {
         <div className="container mx-auto px-4 text-center">
             <h2 className="text-3xl font-bold mb-4 text-lightText flex items-center justify-center gap-1">
               <img src={appIcon} alt="NeuralHealer icon" className="h-4 w-4 md:h-5 md:w-5 object-contain" />
-              Ready to Start Your Journey?
+              {t.home.readyToStart}
             </h2>
               <p className="text-xl text-lightText mb-8 max-w-2xl mx-auto">
-                    Join thousands of users who have taken the first step towards better mental health with NeuralHealer.
+                    {t.home.takeFirstStep}
           </p>
           <Button variant="secondary" size="large" onClick={handleGetStarted}>
-            Get Started Today
+            {t.common.getStarted}
           </Button>
         </div>
       </div>

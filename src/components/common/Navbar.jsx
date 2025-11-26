@@ -1,12 +1,15 @@
 import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import Button from './Button';
+import LanguageToggle from './LanguageToggle';
 import { useAuth } from '../../hooks/useAuth';
+import { useLanguage } from '../../hooks/useLanguage.jsx';
 import navLogo from '../../assets/nav-logo.png';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user, isLoggedIn, accountType, logoutUser } = useAuth();
+  const { t } = useLanguage();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -17,21 +20,21 @@ const Navbar = () => {
 
   // Patient navigation
   const patientNav = [
-    { name: 'Home', href: '/', current: location.pathname === '/' },
-    { name: 'About', href: '/about', current: location.pathname === '/about' },
-    { name: 'Contact', href: '/contact', current: location.pathname === '/contact' },
+    { name: t.common.home, href: '/', current: location.pathname === '/' },
+    { name: t.common.about, href: '/about', current: location.pathname === '/about' },
+    { name: t.common.contact, href: '/contact', current: location.pathname === '/contact' },
     ...(isLoggedIn && accountType === 'patient' ? [
-      { name: 'Chat', href: '/chat', current: location.pathname === '/chat' },
-      { name: 'Doctors', href: '/booking', current: location.pathname === '/booking' },
-      { name: 'Profile', href: '/profile', current: location.pathname === '/profile' },
+      { name: t.navigation.chat, href: '/chat', current: location.pathname === '/chat' },
+      { name: t.navigation.doctors, href: '/booking', current: location.pathname === '/booking' },
+      { name: t.navigation.profile, href: '/profile', current: location.pathname === '/profile' },
     ] : []),
   ];
 
   // Doctor navigation
   const doctorNav = [
-    { name: 'Dashboard', href: '/doctor-dashboard', current: location.pathname === '/doctor-dashboard' },
-    { name: 'Appointments', href: '/doctor-appointments', current: location.pathname === '/doctor-appointments' },
-    { name: 'My Patients', href: '/doctor-patients', current: location.pathname === '/doctor-patients' },
+    { name: t.navigation.dashboard, href: '/doctor-dashboard', current: location.pathname === '/doctor-dashboard' },
+    { name: t.navigation.appointments, href: '/doctor-appointments', current: location.pathname === '/doctor-appointments' },
+    { name: t.navigation.myPatients, href: '/doctor-patients', current: location.pathname === '/doctor-patients' },
   ];
 
   const navigation = isLoggedIn && accountType === 'doctor' ? doctorNav : patientNav;
@@ -39,7 +42,7 @@ const Navbar = () => {
   return (
     <nav className="bg-white shadow-lg">
       <div className="container mx-auto px-4">
-  <div className="flex justify-between items-center h-15">
+        <div className="flex justify-between items-center h-15">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
             <img
@@ -69,27 +72,25 @@ const Navbar = () => {
 
           {/* Desktop Auth Buttons */}
           <div className="hidden md:flex items-center space-x-4">
+            <LanguageToggle />
             {isLoggedIn ? (
               <div className="flex items-center space-x-4">
                 <div className="flex flex-col items-end">
                   <span className="text-textSecondary text-sm">
-                    Welcome, {user?.firstName || 'User'}
-                  </span>
-                  <span className="text-xs text-primary font-medium capitalize">
-                    {accountType === 'doctor' ? 'Doctor' : 'Patient'}
+                    {t.common.welcome}, {user?.firstName || 'User'}
                   </span>
                 </div>
                 <Button variant="ghost" onClick={handleLogout}>
-                  Logout
+                  {t.common.logout}
                 </Button>
               </div>
             ) : (
               <div className="flex items-center space-x-4">
                 <Link to="/login">
-                  <Button variant="ghost">Sign In</Button>
+                  <Button variant="ghost">{t.common.signIn}</Button>
                 </Link>
                 <Link to="/register">
-                  <Button variant="ghost">Get Started</Button>
+                  <Button variant="ghost">{t.common.getStarted}</Button>
                 </Link>
               </div>
             )}
@@ -133,16 +134,19 @@ const Navbar = () => {
               
               {/* Mobile Auth */}
               <div className="pt-4 border-t border-accent/30">
+                <div className="px-3 py-2 pb-3">
+                  <LanguageToggle />
+                </div>
                 {isLoggedIn ? (
                   <div className="space-y-2">
                     <div className="px-3 py-2 text-textSecondary">
-                      Welcome, {user?.firstName || 'User'}
+                      {t.common.welcome}, {user?.firstName || 'User'}
                     </div>
                     <button
                       onClick={handleLogout}
                       className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-textPrimary hover:text-primary hover:bg-accent/20"
                     >
-                      Logout
+                      {t.common.logout}
                     </button>
                   </div>
                 ) : (
@@ -152,14 +156,14 @@ const Navbar = () => {
                       className="block px-3 py-2 rounded-md text-base font-medium text-textPrimary hover:text-primary hover:bg-accent/20"
                       onClick={() => setIsMenuOpen(false)}
                     >
-                      Sign In
+                      {t.common.signIn}
                     </Link>
                     <Link
                       to="/register"
                       className="block px-3 py-2 rounded-md text-base font-medium text-white bg-primary hover:bg-primary/90"
                       onClick={() => setIsMenuOpen(false)}
                     >
-                      Get Started
+                      {t.common.getStarted}
                     </Link>
                   </div>
                 )}

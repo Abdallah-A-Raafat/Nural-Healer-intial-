@@ -6,6 +6,7 @@ import * as yup from 'yup';
 import Button from '../components/common/Button';
 import Input from '../components/common/Input';
 import { useAuth } from '../hooks/useAuth';
+import { useLanguage } from '../hooks/useLanguage.jsx';
 
 const schema = yup.object({
   accountType: yup
@@ -39,6 +40,7 @@ const schema = yup.object({
 });
 
 const Register = () => {
+  const { t } = useLanguage();
   const [isLoading, setIsLoading] = useState(false);
   const [apiError, setApiError] = useState('');
   const { registerUser } = useAuth();
@@ -81,10 +83,10 @@ const Register = () => {
     <div className="min-h-screen bg-background flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <h2 className="mt-6 text-center text-3xl font-bold text-textPrimary">
-          Join NeuralHealer
+          {t.auth.register}
         </h2>
         <p className="mt-2 text-center text-sm text-textSecondary">
-          Create your account and start your mental health journey
+          {t.auth.registerSubtitle}
         </p>
       </div>
 
@@ -100,7 +102,7 @@ const Register = () => {
             {/* Account Type Selection */}
             <div className="space-y-3">
               <label className="block text-sm font-medium text-textPrimary">
-                I am a:
+                {t.auth.selectAccountType}
               </label>
               <div className="grid grid-cols-2 gap-3">
                 <label className={`relative flex items-center p-4 border-2 rounded-lg cursor-pointer transition-all ${
@@ -114,7 +116,7 @@ const Register = () => {
                     {...register('accountType')}
                     className="h-4 w-4 text-primary"
                   />
-                  <span className="ml-2 font-medium text-textPrimary">Patient</span>
+                  <span className="ml-2 font-medium text-textPrimary">{t.common.patient}</span>
                 </label>
 
                 <label className={`relative flex items-center p-4 border-2 rounded-lg cursor-pointer transition-all ${
@@ -128,7 +130,7 @@ const Register = () => {
                     {...register('accountType')}
                     className="h-4 w-4 text-primary"
                   />
-                  <span className="ml-2 font-medium text-textPrimary">Doctor</span>
+                  <span className="ml-2 font-medium text-textPrimary">{t.common.doctor}</span>
                 </label>
               </div>
               {errors.accountType && (
@@ -138,16 +140,15 @@ const Register = () => {
 
             <div className="grid grid-cols-2 gap-4">
               <Input
-                label="First name"
+                label={t.common.firstName}
                 type="text"
                 placeholder="First name"
                 required
                 error={errors.firstName?.message}
                 {...register('firstName')}
               />
-
               <Input
-                label="Last name"
+                label={t.common.lastName}
                 type="text"
                 placeholder="Last name"
                 required
@@ -157,7 +158,7 @@ const Register = () => {
             </div>
 
             <Input
-              label="Email address"
+              label={t.common.email}
               type="email"
               placeholder="Enter your email"
               required
@@ -166,7 +167,7 @@ const Register = () => {
             />
 
             <Input
-              label="Password"
+              label={t.common.password}
               type="password"
               placeholder="Create a password"
               required
@@ -175,7 +176,7 @@ const Register = () => {
             />
 
             <Input
-              label="Confirm password"
+              label={t.common.confirmPassword}
               type="password"
               placeholder="Confirm your password"
               required
@@ -191,14 +192,7 @@ const Register = () => {
                 {...register('agreeToTerms')}
               />
               <label htmlFor="agree-terms" className="ml-2 block text-sm text-textPrimary">
-                I agree to the{' '}
-                <a href="#" className="text-primary hover:text-primary-dark font-medium">
-                  Terms and Conditions
-                </a>{' '}
-                and{' '}
-                <a href="#" className="text-primary hover:text-primary-dark font-medium">
-                  Privacy Policy
-                </a>
+                {t.common.agreeToTerms}
               </label>
             </div>
             {errors.agreeToTerms && (
@@ -212,7 +206,7 @@ const Register = () => {
               className="w-full mt-6 bg-gray-100"
               variant="ghost"
             >
-              Create account
+              {t.auth.register}
             </Button>
           </form>
 
@@ -222,14 +216,14 @@ const Register = () => {
                 <div className="w-full border-t border-gray-300" />
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">Already have an account?</span>
+                <span className="px-2 bg-white text-gray-500">{t.common.haveAccount}</span>
               </div>
             </div>
 
             <div className="mt-6">
               <Link to="/login">
                 <Button variant="ghost" size="large" className="w-full bg-gray-100">
-                  Sign in instead
+                  {t.common.signIn}
                 </Button>
               </Link>
             </div>

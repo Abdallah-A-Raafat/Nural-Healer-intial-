@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { LanguageProvider } from './hooks/useLanguage.jsx';
 import Navbar from './components/common/Navbar';
 import Home from './pages/Home';
 import About from './pages/About';
@@ -14,12 +15,11 @@ import Chat from './pages/patient/Chat';
 import Doctors from './pages/patient/Doctors';
 import Profile from './pages/patient/Profile';
 
-// Placeholder components for protected routes
-
 function App() {
   return (
-    <Router>
-  <div className="min-h-screen bg-background">
+    <LanguageProvider>
+      <Router>
+        <div className="min-h-screen bg-background">
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -77,8 +77,9 @@ function App() {
             } 
           />
         </Routes>
-      </div>
-    </Router>
+        </div>
+      </Router>
+    </LanguageProvider>
   );
 }
 
